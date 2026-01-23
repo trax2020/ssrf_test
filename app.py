@@ -4,22 +4,18 @@ import os
 
 app = Flask(__name__)
 
-# Absolute repo root
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-
-# Restrict access to this directory only
 FILES_DIR = os.path.join(BASE_DIR, "files")
 
-# Strict allowlist
-ALLOWED_EXTENSIONS = {".txt", ".json", ".bin"}
+ALLOWED_EXTENSIONS = {".txt", ".json", ".bin", ".svg"}
 
 def is_safe_path(base, path):
     real_base = os.path.realpath(base)
     real_path = os.path.realpath(path)
     return real_path.startswith(real_base)
 
-@app.route("/", methods=["GET", "POST"])
-def webhook():
+@app.route("/files", methods=["GET"])
+def files():
     print("==== REQUEST ====")
     print("Time:", datetime.datetime.utcnow())
     print("Method:", request.method)
@@ -27,11 +23,9 @@ def webhook():
     print("Args:", request.args)
 
     filename = request.args.get("name")
-
     if not filename:
-        return "OK", 200
+        abort(400)
 
-    # Prevent dotfile access
     if filename.startswith("."):
         abort(403)
 
