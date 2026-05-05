@@ -18,7 +18,7 @@ os.makedirs(LOG_DIR, exist_ok=True)
 # =====================
 # File serving config
 # =====================
-ALLOWED_EXTENSIONS = {".txt", ".json", ".bin", ".svg"}
+ALLOWED_EXTENSIONS = {".txt", ".json", ".bin", ".svg",".png",".jpg",".php",".cmd",".asp",".aspx"}
 
 def is_safe_path(base, path):
     real_base = os.path.realpath(base)
